@@ -4,6 +4,14 @@ A gamified language learning platform inspired by modern language learning appli
 
 ---
 
+## 🌐 Live Demo & Deployment Summary
+
+- 📱 **Web Application (Vercel)**: [https://lingo-quest-two.vercel.app](https://lingo-quest-two.vercel.app)
+- ⚡ **Backend REST API (Render)**: [https://lingo-quest.onrender.com](https://lingo-quest.onrender.com)
+- 📦 **GitHub Repository**: [https://github.com/kb7781/Lingo_Quest](https://github.com/kb7781/Lingo_Quest)
+
+---
+
 ## Product Overview
 
 **LingoQuest** is a full-stack, gamified web application designed to make language learning intuitive, engaging, and rewarding. Traditional language acquisition often suffers from high attrition rates due to dry, repetitive study methods. LingoQuest addresses this by combining cognitive learning techniques with proven gamification mechanics—such as daily streaks, XP points, heart penalties, and interactive exercise types.
