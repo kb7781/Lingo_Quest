@@ -268,6 +268,4 @@ LingoQuest is architected for simple cloud deployment:
 
 ---
 
-## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
