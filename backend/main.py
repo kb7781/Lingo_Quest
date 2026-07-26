@@ -23,13 +23,20 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
 
 app = FastAPI(title="LingoQuest API", lifespan=lifespan)
 
-# CORS — allow Next.js dev server
+# CORS — allow all origins for production frontend communication
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/")
+def root():
+    return {"message": "LingoQuest API is running!", "status": "online"}
+
 
 # Mount routers
 app.include_router(home.router, prefix="/api")
