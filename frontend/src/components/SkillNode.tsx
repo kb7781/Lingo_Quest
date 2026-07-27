@@ -43,6 +43,31 @@ export default function SkillNode({ skill, index }: SkillNodeProps) {
     >
       {/* Progress ring + node */}
       <div className="relative">
+        {/* Floating START badge for current node */}
+        {skill.status === "current" && (
+          <motion.div
+            initial={{ y: -5, opacity: 0 }}
+            animate={{ y: [0, -6, 0], opacity: 1 }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            className="absolute -top-7 left-1/2 -translate-x-1/2 z-20 rounded-xl bg-white dark:bg-slate-800 border-2 border-[var(--color-primary)] px-3 py-0.5 text-[11px] font-black uppercase text-[var(--color-primary)] shadow-md"
+          >
+            START
+            <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 bg-white dark:bg-slate-800 border-b-2 border-r-2 border-[var(--color-primary)]" />
+          </motion.div>
+        )}
+
+        {/* Duo Owl Mascot next to active node */}
+        {skill.status === "current" && (
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1, rotate: [0, 5, -5, 0] }}
+            transition={{ repeat: Infinity, duration: 3 }}
+            className="absolute -right-16 top-2 text-4xl hidden sm:block select-none pointer-events-none drop-shadow-md"
+          >
+            🦉
+          </motion.div>
+        )}
+
         {/* Progress ring (current skill only) */}
         {skill.status === "current" && (
           <svg className="absolute -inset-2 w-[104px] h-[104px]" viewBox="0 0 104 104">

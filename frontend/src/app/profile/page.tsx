@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowLeft, Flame, Zap, Heart, BookOpen, GraduationCap, Gem } from "lucide-react";
+import Sidebar from "@/components/Sidebar";
 import { useUser } from "@/context/UserContext";
 import api from "@/lib/api";
 import type { ProfileData, HomeData } from "@/types";
@@ -42,18 +43,21 @@ export default function ProfilePage() {
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <header className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
-        <div className="mx-auto flex h-14 max-w-2xl items-center gap-3 px-4">
-          <button onClick={() => router.push("/")} className="rounded-full p-2 text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text)] transition-all">
-            <ArrowLeft className="h-5 w-5" />
-          </button>
-          <h1 className="text-lg font-black">Profile</h1>
-        </div>
-      </header>
+    <div className="flex min-h-screen bg-[var(--color-bg)]">
+      <Sidebar />
 
-      <main className="mx-auto max-w-2xl px-4 py-6">
+      <div className="flex-1 flex flex-col items-center min-w-0">
+        {/* Header */}
+        <header className="w-full border-b border-[var(--color-border)] bg-[var(--color-bg)]">
+          <div className="mx-auto flex h-14 max-w-2xl items-center gap-3 px-4">
+            <button onClick={() => router.push("/")} className="rounded-full p-2 text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text)] transition-all">
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+            <h1 className="text-lg font-black">Profile</h1>
+          </div>
+        </header>
+
+        <main className="w-full max-w-2xl px-4 py-6">
         {/* Avatar + Name */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -125,5 +129,6 @@ export default function ProfilePage() {
         </motion.div>
       </main>
     </div>
-  );
+  </div>
+);
 }

@@ -20,15 +20,18 @@ export default function SkillPath({ units, language }: SkillPathProps) {
       )}
       {units.map((unit) => (
         <div key={unit.id} className="w-full max-w-md">
-          {/* Unit Header */}
-          <div className="mb-10 overflow-hidden rounded-2xl bg-gradient-to-r from-[#58cc02] to-[#46a302] p-5 text-center text-white shadow-lg">
-            <div className="flex items-center justify-center gap-2 mb-1">
-              <div className="h-1 w-8 rounded-full bg-white/30" />
-              <span className="text-xs font-bold uppercase tracking-widest opacity-80">Unit {unit.id}</span>
-              <div className="h-1 w-8 rounded-full bg-white/30" />
+          {/* Unit Header Banner matching Duolingo screenshot */}
+          <div className="mb-10 rounded-2xl bg-[#58cc02] p-5 text-white shadow-lg flex items-center justify-between gap-4">
+            <div>
+              <span className="text-[11px] font-black uppercase tracking-wider opacity-85 block mb-0.5">
+                SECTION 1, UNIT {unit.id}
+              </span>
+              <h2 className="text-2xl font-black leading-tight">{unit.title}</h2>
+              <p className="text-xs font-bold opacity-90 mt-0.5">{unit.description}</p>
             </div>
-            <h2 className="text-xl font-black">{unit.title}</h2>
-            <p className="text-sm font-bold opacity-75">{unit.description}</p>
+            <button className="flex items-center gap-2 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur-md px-3.5 py-2 text-xs font-black uppercase tracking-wider transition-all shrink-0">
+              📖 GUIDEBOOK
+            </button>
           </div>
 
           {/* Zigzag Skill Path */}
