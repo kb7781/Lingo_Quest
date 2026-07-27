@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import SkillNode from "./SkillNode";
+import GuidebookModal from "./GuidebookModal";
 import type { Unit, Language } from "@/types";
 
 interface SkillPathProps {
@@ -9,6 +11,8 @@ interface SkillPathProps {
 }
 
 export default function SkillPath({ units, language }: SkillPathProps) {
+  const [activeGuidebookUnit, setActiveGuidebookUnit] = useState<Unit | null>(null);
+
   return (
     <div className="flex flex-col items-center py-8">
       {/* Active Language Badge */}
@@ -29,7 +33,10 @@ export default function SkillPath({ units, language }: SkillPathProps) {
               <h2 className="text-2xl font-black leading-tight">{unit.title}</h2>
               <p className="text-xs font-bold opacity-90 mt-0.5">{unit.description}</p>
             </div>
-            <button className="flex items-center gap-2 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur-md px-3.5 py-2 text-xs font-black uppercase tracking-wider transition-all shrink-0">
+            <button
+              onClick={() => setActiveGuidebookUnit(unit)}
+              className="flex items-center gap-2 rounded-xl bg-white/20 hover:bg-white/30 active:scale-95 backdrop-blur-md px-3.5 py-2 text-xs font-black uppercase tracking-wider transition-all shrink-0 cursor-pointer"
+            >
               📖 GUIDEBOOK
             </button>
           </div>
@@ -57,6 +64,15 @@ export default function SkillPath({ units, language }: SkillPathProps) {
           </div>
         </div>
       ))}
+
+      {/* Guidebook Modal */}
+      {activeGuidebookUnit && (
+        <GuidebookModal
+          isOpen={!!activeGuidebookUnit}
+          onClose={() => setActiveGuidebookUnit(null)}
+          unit={activeGuidebookUnit}
+        />
+      )}
 
       {/* Bottom spacer */}
       <div className="h-20" />
