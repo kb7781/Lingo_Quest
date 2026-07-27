@@ -12,19 +12,54 @@ export default function HomePage() {
   const { user, setUser } = useUser();
   const [homeData, setHomeData] = useState<HomeData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  const fetchData = () => {
+    setLoading(true);
+    setError(false);
+    api
+      .get<HomeData>("/home")
+      .then((res) => {
+        setHomeData(res.data);
+        setUser(res.data.user);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("API error:", err);
+        setError(true);
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
-    api.get<HomeData>("/home").then((res) => {
-      setHomeData(res.data);
-      setUser(res.data.user);
-      setLoading(false);
-    });
-  }, [setUser]);
+    fetchData();
+  }, []);
 
-  if (loading || !homeData) {
+  if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center">
+      <div className="flex h-screen flex-col items-center justify-center gap-4">
         <div className="h-12 w-12 animate-spin rounded-full border-4 border-[var(--color-primary)] border-t-transparent" />
+        <p className="text-sm font-bold text-[var(--color-text-secondary)]">Loading LingoQuest...</p>
+      </div>
+    );
+  }
+
+  if (error || !homeData) {
+    return (
+      <div className="flex h-screen flex-col items-center justify-center gap-4 p-4 text-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-100 dark:bg-red-950/30 text-red-500 font-black text-2xl">
+          ⚡
+        </div>
+        <h2 className="text-xl font-black">Connecting to Server...</h2>
+        <p className="max-w-sm text-sm font-bold text-[var(--color-text-secondary)]">
+          The backend may be waking up from sleep mode. Please try again.
+        </p>
+        <button
+          onClick={fetchData}
+          className="btn-3d btn-primary px-8 py-3 text-sm"
+        >
+          Try Again
+        </button>
       </div>
     );
   }
