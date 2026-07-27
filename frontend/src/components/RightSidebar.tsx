@@ -64,31 +64,7 @@ export default function RightSidebar({ languageFlag = "🇪🇸", languageName =
         </Link>
       </div>
 
-      {/* Card 2: Daily Quests */}
-      <div className="rounded-2xl border-2 border-[var(--color-border)] bg-[var(--color-card)] p-5 shadow-sm">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-black text-base">Daily Quests</h3>
-          <span className="text-[10px] font-bold text-[var(--color-secondary)] uppercase tracking-wider">VIEW ALL</span>
-        </div>
 
-        <div className="flex items-center gap-3 mt-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-100 dark:bg-yellow-950/30 text-yellow-500 flex-shrink-0">
-            <Target className="w-5 h-5" />
-          </div>
-          <div className="flex-1">
-            <div className="flex justify-between text-xs font-black mb-1">
-              <span>Earn {user.daily_goal} XP</span>
-              <span className="text-[var(--color-text-secondary)]">{user.daily_xp} / {user.daily_goal}</span>
-            </div>
-            <div className="h-3.5 w-full rounded-full bg-[var(--color-bg-tertiary)] overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-yellow-400 to-amber-500 transition-all duration-500 rounded-full"
-                style={{ width: `${dailyProgress * 100}%` }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Card 3: Language & Course Info */}
       <div className="rounded-2xl border-2 border-[var(--color-border)] bg-[var(--color-card)] p-5 shadow-sm">
