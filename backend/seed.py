@@ -38,39 +38,59 @@ def seed_database(db: Session) -> None:
     db.add_all(users)
     db.flush()
 
-    # --- Unit ---
-    unit = Unit(
+    # --- Unit 1 ---
+    unit1 = Unit(
         language_id=language.id,
         title="Basics",
         description="Learn the fundamentals of Spanish",
         order=1,
     )
-    db.add(unit)
+    db.add(unit1)
+
+    # --- Unit 2 ---
+    unit2 = Unit(
+        language_id=language.id,
+        title="Conversations",
+        description="Master everyday travel and dialogue",
+        order=2,
+    )
+    db.add(unit2)
     db.flush()
 
-    # --- Skills ---
-    skills_data = [
+    # --- Skills for Unit 1 ---
+    skills_data_u1 = [
         ("Greetings", "👋", 1),
         ("Food", "🍕", 2),
         ("Numbers", "🔢", 3),
         ("Family", "👨‍👩‍👧", 4),
     ]
-    skills = []
-    for title, icon, order in skills_data:
-        skill = Skill(unit_id=unit.id, title=title, icon=icon, order=order)
+    skills_u1 = []
+    for title, icon, order in skills_data_u1:
+        skill = Skill(unit_id=unit1.id, title=title, icon=icon, order=order)
         db.add(skill)
-        skills.append(skill)
+        skills_u1.append(skill)
+
+    # --- Skills for Unit 2 ---
+    skills_data_u2 = [
+        ("Travel", "✈️", 1),
+        ("Phrases", "💬", 2),
+    ]
+    skills_u2 = []
+    for title, icon, order in skills_data_u2:
+        skill = Skill(unit_id=unit2.id, title=title, icon=icon, order=order)
+        db.add(skill)
+        skills_u2.append(skill)
     db.flush()
 
-    # --- Lessons & Exercises ---
+    # --- Lessons & Exercises for Unit 1 ---
+    _seed_greetings(db, skills_u1[0])
+    _seed_food(db, skills_u1[1])
+    _seed_numbers(db, skills_u1[2])
+    _seed_family(db, skills_u1[3])
 
-    # Each skill gets 2 lessons, each lesson gets 3-4 exercises = ~28 total
-    # Exercise types: multiple_choice, word_bank, match_pairs, fill_blank, type_answer
-
-    _seed_greetings(db, skills[0])
-    _seed_food(db, skills[1])
-    _seed_numbers(db, skills[2])
-    _seed_family(db, skills[3])
+    # --- Lessons & Exercises for Unit 2 ---
+    _seed_travel(db, skills_u2[0])
+    _seed_phrases(db, skills_u2[1])
 
     # --- Achievements ---
     achievements = [
@@ -273,6 +293,77 @@ def _seed_family(db: Session, skill: Skill) -> None:
     _add_exercise(db, lesson8.id, order=3, type="type_answer",
         prompt="Translate: 'my mother'",
         correct_answer="mi madre")
+
+
+# ──────────────────────────────────────────────
+# Skill 5: Travel
+# ──────────────────────────────────────────────
+
+def _seed_travel(db: Session, skill: Skill) -> None:
+    lesson9 = Lesson(skill_id=skill.id, order=1)
+    db.add(lesson9)
+    db.flush()
+
+    _add_exercise(db, lesson9.id, order=1, type="multiple_choice",
+        prompt="'El hotel' means...",
+        correct_answer="The hotel",
+        options=[("The hotel", True), ("The airport", False), ("The taxi", False), ("The museum", False)])
+
+    _add_exercise(db, lesson9.id, order=2, type="word_bank",
+        prompt="Translate: 'Where is the passport?'",
+        correct_answer="¿Dónde está el pasaporte?",
+        options=[("¿Dónde", True), ("está", True), ("el", True), ("pasaporte?", True), ("tengo", False), ("como", False)])
+
+    _add_exercise(db, lesson9.id, order=3, type="type_answer",
+        prompt="Translate: 'a taxi'",
+        correct_answer="un taxi")
+
+    lesson10 = Lesson(skill_id=skill.id, order=2)
+    db.add(lesson10)
+    db.flush()
+
+    _add_exercise(db, lesson10.id, order=1, type="match_pairs",
+        prompt="Match the travel terms",
+        correct_answer="matched",
+        pairs=[("Hotel", "Hotel"), ("Taxi", "Taxi"), ("Boleto", "Ticket"), ("Maleta", "Suitcase")])
+
+    _add_exercise(db, lesson10.id, order=2, type="fill_blank",
+        prompt="Necesito un ___  (I need a ticket)",
+        correct_answer="boleto",
+        options=[("boleto", True), ("pasaporte", False), ("hotel", False), ("taxi", False)])
+
+
+# ──────────────────────────────────────────────
+# Skill 6: Phrases
+# ──────────────────────────────────────────────
+
+def _seed_phrases(db: Session, skill: Skill) -> None:
+    lesson11 = Lesson(skill_id=skill.id, order=1)
+    db.add(lesson11)
+    db.flush()
+
+    _add_exercise(db, lesson11.id, order=1, type="multiple_choice",
+        prompt="'Lo siento' means...",
+        correct_answer="I'm sorry",
+        options=[("I'm sorry", True), ("Thank you", False), ("Excuse me", False), ("You're welcome", False)])
+
+    _add_exercise(db, lesson11.id, order=2, type="type_answer",
+        prompt="Translate: 'Excuse me'",
+        correct_answer="Con permiso")
+
+    lesson12 = Lesson(skill_id=skill.id, order=2)
+    db.add(lesson12)
+    db.flush()
+
+    _add_exercise(db, lesson12.id, order=1, type="word_bank",
+        prompt="Translate: 'Speak slower, please'",
+        correct_answer="Hable más despacio por favor",
+        options=[("Hable", True), ("más", True), ("despacio", True), ("por", True), ("favor", True), ("gracias", False)])
+
+    _add_exercise(db, lesson12.id, order=2, type="match_pairs",
+        prompt="Match common phrases",
+        correct_answer="matched",
+        pairs=[("De nada", "You're welcome"), ("Lo siento", "I'm sorry"), ("Disculpe", "Excuse me"), ("Salud", "Cheers")])
 
 
 # ──────────────────────────────────────────────
