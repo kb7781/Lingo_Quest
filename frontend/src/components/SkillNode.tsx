@@ -14,10 +14,18 @@ export default function SkillNode({ skill, index }: SkillNodeProps) {
   const router = useRouter();
 
   const handleClick = () => {
-    if (skill.status !== "current") return;
-    const nextLesson = skill.lessons.find((l) => !l.completed);
-    if (nextLesson) {
-      router.push(`/lesson/${nextLesson.id}`);
+    if (skill.status === "locked") return;
+
+    if (skill.status === "current") {
+      const nextLesson = skill.lessons.find((l) => !l.completed) || skill.lessons[0];
+      if (nextLesson) {
+        router.push(`/lesson/${nextLesson.id}`);
+      }
+    } else if (skill.status === "completed") {
+      // Replay / practice completed skill
+      if (skill.lessons.length > 0) {
+        router.push(`/lesson/${skill.lessons[0].id}`);
+      }
     }
   };
 
